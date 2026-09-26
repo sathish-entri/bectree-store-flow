@@ -3,6 +3,7 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const connectDB = require('./config/db');
 const { notFound, errorHandler } = require('./middleware/errorHandler');
+const productRoutes = require('./routes/productRoutes');
 
 dotenv.config();
 
@@ -19,6 +20,9 @@ app.get('/api/health', (req, res) => {
     message: 'StoreFlow API is running'
   });
 });
+
+// Routes
+app.use('/api/products', productRoutes);
 
 // Error handling middleware
 app.use(notFound);
