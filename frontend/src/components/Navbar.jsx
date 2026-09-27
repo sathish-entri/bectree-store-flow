@@ -1,5 +1,5 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
@@ -80,10 +80,34 @@ export default function Navbar({ onSearch, searchValue, onToggleMobileFilter }) 
   const { cartCount } = useCart();
   const navigate = useNavigate();
   const [localSearch, setLocalSearch] = useState(searchValue ?? '');
+  const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const userMenuRef = useRef(null);
 
   useEffect(() => {
     setLocalSearch(searchValue ?? '');
   }, [searchValue]);
+
+  // Close user menu on click outside or Escape key
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (userMenuRef.current && !userMenuRef.current.contains(event.target)) {
+        setIsUserMenuOpen(false);
+      }
+    }
+    function handleKeyDown(event) {
+      if (event.key === 'Escape') {
+        setIsUserMenuOpen(false);
+      }
+    }
+    if (isUserMenuOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('keydown', handleKeyDown);
+    };
+  }, [isUserMenuOpen]);
 
   const handleInputChange = (e) => {
     const val = e.target.value;
@@ -104,6 +128,7 @@ export default function Navbar({ onSearch, searchValue, onToggleMobileFilter }) 
   };
 
   const handleLogout = () => {
+    setIsUserMenuOpen(false);
     logout();
     navigate('/');
   };
@@ -186,14 +211,100 @@ export default function Navbar({ onSearch, searchValue, onToggleMobileFilter }) 
           {/* Right: User + Cart */}
           <div className="main-header__right">
             {user ? (
-              <button
-                className="main-header__btn"
-                onClick={handleLogout}
-                title={`Logged in as ${user.name}. Click to logout.`}
-              >
-                <IconUser />
-                <span>{user.name.split(' ')[0]}</span>
-              </button>
+              <div className="main-header__user-wrapper" ref={userMenuRef}>
+                <button
+                  type="button"
+                  className={`main-header__btn${isUserMenuOpen ? ' main-header__btn--active' : ''}`}
+                  onClick={() => setIsUserMenuOpen(prev => !prev)}
+                  aria-expanded={isUserMenuOpen}
+                  aria-haspopup="true"
+                  id="nav-user-menu-btn"
+                >
+                  <IconUser />
+                  <span>{user.name.split(' ')[0]}</span>
+                  <svg
+                    className="main-header__user-chevron"
+                    width="12"
+                    height="12"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.5"
+                    style={{
+                      transform: isUserMenuOpen ? 'rotate(180deg)' : 'none',
+                      transition: 'transform 0.2s ease',
+                    }}
+                  >
+                    <path d="M6 9l6 6 6-6" />
+                  </svg>
+                </button>
+
+                {isUserMenuOpen && (
+                  <div className="user-dropdown-menu" role="menu" aria-label="User Account Menu">
+                    {/* User Profile Summary */}
+                    <div className="user-dropdown__header">
+                      <div className="user-dropdown__avatar" aria-hidden="true">
+                        {user.name.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="user-dropdown__user-details">
+                        <p className="user-dropdown__name">{user.name}</p>
+                        <p className="user-dropdown__email">{user.email}</p>
+                      </div>
+                    </div>
+
+                    <div className="user-dropdown__divider" />
+
+                    {/* Navigation Items */}
+                    <div className="user-dropdown__links">
+                      <Link
+                        to="/cart"
+                        className="user-dropdown__item"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        role="menuitem"
+                      >
+                        <IconCart />
+                        <span>My Cart</span>
+                        {cartCount > 0 && (
+                          <span className="user-dropdown__badge">{cartCount}</span>
+                        )}
+                      </Link>
+
+                      <Link
+                        to="/products"
+                        className="user-dropdown__item"
+                        onClick={() => setIsUserMenuOpen(false)}
+                        role="menuitem"
+                      >
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <rect x="3" y="3" width="7" height="7" />
+                          <rect x="14" y="3" width="7" height="7" />
+                          <rect x="14" y="14" width="7" height="7" />
+                          <rect x="3" y="14" width="7" height="7" />
+                        </svg>
+                        <span>Browse Products</span>
+                      </Link>
+                    </div>
+
+                    <div className="user-dropdown__divider" />
+
+                    {/* Sign Out Action */}
+                    <button
+                      type="button"
+                      className="user-dropdown__item user-dropdown__item--danger"
+                      onClick={handleLogout}
+                      role="menuitem"
+                      id="nav-logout-btn"
+                    >
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                        <polyline points="16 17 21 12 16 7" />
+                        <line x1="21" y1="12" x2="9" y2="12" />
+                      </svg>
+                      <span>Sign Out</span>
+                    </button>
+                  </div>
+                )}
+              </div>
             ) : (
               <Link to="/login" className="main-header__btn" id="nav-signin-btn">
                 <IconUser />

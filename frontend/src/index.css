@@ -58,6 +58,13 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE / Edge */
+}
+
+/* Chrome, Edge, Safari, Opera */
+::-webkit-scrollbar {
+  display: none;
 }
 
 body {
@@ -67,6 +74,7 @@ body {
   background-color: var(--page-bg);
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
+  scrollbar-width: none; /* Firefox */
 }
 
 a {
@@ -348,6 +356,174 @@ ul { list-style: none; }
   justify-content: center;
   line-height: 1;
   border: 2px solid #FFFFFF;
+}
+
+/* User Account Dropdown Menu */
+.main-header__user-wrapper {
+  position: relative;
+}
+
+.main-header__btn--active {
+  color: var(--primary);
+  background-color: var(--primary-light);
+}
+
+.main-header__btn--active svg {
+  color: var(--primary);
+}
+
+.main-header__btn .main-header__user-chevron {
+  width: 14px !important;
+  height: 14px !important;
+  margin-left: 2px;
+}
+
+.user-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  width: 250px;
+  max-width: calc(100vw - 24px);
+  background-color: #FFFFFF;
+  border-radius: 14px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 2px 6px rgba(0, 0, 0, 0.04);
+  border: 1px solid #E2E8F0;
+  padding: 10px;
+  z-index: 1000;
+  animation: userDropdownFadeIn 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes userDropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-6px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.user-dropdown__header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 6px 10px;
+}
+
+.user-dropdown__avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary) 0%, #006CA0 100%);
+  color: #FFFFFF;
+  font-weight: 700;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0, 142, 204, 0.3);
+}
+
+.user-dropdown__user-details {
+  overflow: hidden;
+  text-align: left;
+}
+
+.user-dropdown__name {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--navy);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+}
+
+.user-dropdown__email {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.user-dropdown__divider {
+  height: 1px;
+  background-color: #EDF2F7;
+  margin: 6px 0;
+}
+
+.user-dropdown__links {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.user-dropdown__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 12px;
+  border-radius: 8px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text-main);
+  text-decoration: none;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.user-dropdown__item svg {
+  width: 18px !important;
+  height: 18px !important;
+  color: var(--text-muted);
+  flex-shrink: 0;
+  transition: color 0.15s;
+}
+
+.user-dropdown__item:hover {
+  background-color: var(--primary-light);
+  color: var(--primary);
+}
+
+.user-dropdown__item:hover svg {
+  color: var(--primary);
+}
+
+.user-dropdown__item--danger {
+  color: #DC2626;
+  font-weight: 600;
+}
+
+.user-dropdown__item--danger svg {
+  color: #DC2626;
+}
+
+.user-dropdown__item--danger:hover {
+  background-color: #FEE2E2;
+  color: #B91C1C;
+}
+
+.user-dropdown__item--danger:hover svg {
+  color: #B91C1C;
+}
+
+.user-dropdown__badge {
+  margin-left: auto;
+  background-color: var(--primary);
+  color: #FFFFFF;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 10px;
 }
 
 /* ─── 3. CATEGORY PILL NAVIGATION (Figma horizontal pills) ─ */
@@ -1811,6 +1987,83 @@ ul { list-style: none; }
   width: 100%;
   max-width: 420px;
   box-shadow: 0 4px 16px rgba(0, 0, 0, 0.05);
+}
+
+.login-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1.5px solid #CBD5E1;
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  color: var(--text-main);
+  background-color: #FFFFFF;
+  transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.login-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(0, 142, 204, 0.15);
+}
+
+/* Sign In / Sign Up Submit Button — prominent, comfortable touch target */
+.login-submit-btn {
+  width: 100%;
+  height: 46px;
+  min-height: 46px;
+  background-color: var(--primary);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  font-family: inherit;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 10px;
+  box-shadow: 0 4px 14px rgba(0, 142, 204, 0.28);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.login-submit-btn:hover:not(:disabled) {
+  background-color: var(--primary-dark);
+  box-shadow: 0 6px 18px rgba(0, 142, 204, 0.36);
+  transform: translateY(-1px);
+}
+
+.login-submit-btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(0, 142, 204, 0.2);
+}
+
+.login-submit-btn:disabled {
+  background-color: #CBD5E1;
+  color: #64748B;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.login-toggle-btn {
+  background: none;
+  border: none;
+  color: var(--primary);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 14px;
+  border-radius: 8px;
+  transition: background-color 0.15s, color 0.15s;
+}
+
+.login-toggle-btn:hover {
+  background-color: var(--primary-light);
+  color: var(--primary-dark);
 }
 
 /* Responsive PDP */

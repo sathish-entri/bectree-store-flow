@@ -84,15 +84,7 @@ export default function LoginPage() {
                   onChange={e => setName(e.target.value)}
                   required
                   placeholder="Your Name"
-                  style={{
-                    width: '100%',
-                    padding: '10px 14px',
-                    borderRadius: '10px',
-                    border: '1px solid #CBD5E1',
-                    fontSize: '14px',
-                    fontFamily: 'inherit',
-                    outline: 'none',
-                  }}
+                  className="login-input"
                 />
               </div>
             )}
@@ -107,15 +99,7 @@ export default function LoginPage() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '10px 14px',
-                  borderRadius: '10px',
-                  border: '1px solid #CBD5E1',
-                  fontSize: '14px',
-                  fontFamily: 'inherit',
-                  outline: 'none',
-                }}
+                className="login-input"
               />
             </div>
 
@@ -129,15 +113,7 @@ export default function LoginPage() {
                 value={password}
                 onChange={e => setPassword(e.target.value)}
                 required
-                style={{
-                  width: '100%',
-                  padding: '10px 14px',
-                  borderRadius: '10px',
-                  border: '1px solid #CBD5E1',
-                  fontSize: '14px',
-                  fontFamily: 'inherit',
-                  outline: 'none',
-                }}
+                className="login-input"
               />
             </div>
 
@@ -145,8 +121,7 @@ export default function LoginPage() {
               id="login-submit-btn"
               type="submit"
               disabled={loading}
-              className="pdp-add-cart-btn"
-              style={{ width: '100%', marginTop: '8px' }}
+              className="login-submit-btn"
             >
               {loading ? (isRegister ? 'Creating Account...' : 'Signing In...') : (isRegister ? 'Sign Up' : 'Sign In')}
             </button>
@@ -156,7 +131,7 @@ export default function LoginPage() {
             <button
               type="button"
               onClick={() => { setIsRegister(!isRegister); setError(null); }}
-              style={{ background: 'none', border: 'none', color: 'var(--primary)', fontSize: '13px', fontWeight: 600, cursor: 'pointer' }}
+              className="login-toggle-btn"
             >
               {isRegister ? 'Already have an account? Sign In' : "Don't have an account? Sign Up"}
             </button>
