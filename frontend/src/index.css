@@ -581,6 +581,14 @@ ul { list-style: none; }
 .hero-arrow-btn--prev { left: -16px; }
 .hero-arrow-btn--next { right: -16px; }
 
+/* Hide nav arrows on mobile — dots handle navigation */
+@media (max-width: 640px) {
+  .hero-arrow-btn {
+    display: none;
+  }
+}
+
+
 /* ─── 5. SECTION HEADER (Figma blue underline style) ─────── */
 .section-header {
   display: flex;
@@ -1361,29 +1369,9 @@ ul { list-style: none; }
   opacity: 0.85;
 }
 
-/* ─── 14. RESPONSIVE DESIGN ──────────────────────────────── */
-@media (max-width: 768px) {
-  .topbar { display: none; }
-  .hero-banner-container { display: none; }
 
-  .main-header {
-    height: 64px;
-  }
+/* ─── 14. RESPONSIVE DESIGN — handled in Step 11A section below ─── */
 
-  .main-header__inner {
-    padding: 0 12px;
-    gap: 12px;
-  }
-
-  .main-header__btn span {
-    display: none;
-  }
-
-  .footer__main {
-    grid-template-columns: 1fr;
-    gap: 28px;
-  }
-}
 
 /* ─── 15. STEP 9: PRODUCT DETAIL PAGE (PDP) ───────────────── */
 .pdp-page-wrapper {
@@ -2597,29 +2585,64 @@ ul { list-style: none; }
   }
 }
 
-/* ─── RESPONSIVE: Header ─────────────────────────────────── */
-@media (max-width: 1024px) {
-  .main-header__search {
-    max-width: 480px;
+
+/* ================================================================
+   STEP 11A — COMPREHENSIVE RESPONSIVE DESIGN SYSTEM
+   Breakpoints: 320 → 480 → 640 → 768 → 1024 → 1200 → 1440+
+   ================================================================ */
+
+/* ─── Global: prevent overflow on all screens ─────────────── */
+html, body {
+  overflow-x: hidden;
+}
+
+/* Ensure .app-container never bleeds on mobile */
+.app-container {
+  padding: 0 16px;
+}
+
+/* ─── 1. TOPBAR ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+  .topbar {
+    display: none;
   }
 }
 
+/* ─── 2. MAIN HEADER ─────────────────────────────────────── */
+/* Tablet: tighten search, keep labels */
+@media (max-width: 1024px) {
+  .main-header__search {
+    max-width: 440px;
+  }
+}
+
+/* Mobile: compact icon-only right side */
 @media (max-width: 768px) {
   :root {
-    --header-height: 60px;
+    --header-height: 62px;
   }
 
   .main-header__inner {
     padding: 0 12px;
-    gap: 10px;
+    gap: 8px;
   }
 
   .main-header__logo {
     font-size: 20px;
   }
 
+  .main-header__left {
+    gap: 10px;
+  }
+
+  .main-header__hamburger {
+    width: 36px;
+    height: 36px;
+  }
+
   .main-header__search {
-    max-width: none;
+    max-width: none; /* flex: 1 handles it */
+    min-width: 0;
   }
 
   .main-header__search-box {
@@ -2627,31 +2650,840 @@ ul { list-style: none; }
     padding: 0 10px;
   }
 
-  /* Hide text labels, show only icons on small screens */
+  .main-header__search-icon {
+    width: 17px;
+    height: 17px;
+    margin-right: 8px;
+  }
+
+  .main-header__search-input {
+    font-size: 13px;
+  }
+
+  .main-header__search-filter-icon {
+    width: 17px;
+    height: 17px;
+    margin-left: 6px;
+  }
+
+  /* Icon-only buttons on mobile */
   .main-header__btn span {
     display: none;
   }
 
   .main-header__btn {
     padding: 8px;
+    gap: 0;
+  }
+
+  .main-header__btn svg {
+    width: 22px;
+    height: 22px;
   }
 
   .main-header__right {
-    gap: 2px;
+    gap: 0;
+    flex-shrink: 0;
   }
 
   .main-header__divider {
     display: none;
   }
 
-  .topbar {
+  .main-header__cart-badge {
+    top: 2px;
+    left: 18px;
+    min-width: 16px;
+    height: 16px;
+    font-size: 9px;
+  }
+}
+
+/* Very small: hide hamburger (no sidebar anyway) */
+@media (max-width: 400px) {
+  .main-header__hamburger {
     display: none;
+  }
+
+  .main-header__inner {
+    gap: 6px;
+    padding: 0 10px;
+  }
+}
+
+/* ─── 3. CATEGORY NAV ────────────────────────────────────── */
+@media (max-width: 768px) {
+  :root {
+    --catbar-height: 46px;
+  }
+
+  .category-pill {
+    font-size: 13px;
+    padding: 6px 13px;
   }
 }
 
 @media (max-width: 480px) {
-  .main-header__hamburger {
+  .category-pill {
+    font-size: 12px;
+    padding: 5px 11px;
+  }
+}
+
+/* ─── 4. HERO BANNER ─────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Keep hero but scale down significantly */
+  .hero-card {
+    min-height: 180px;
+    border-radius: var(--radius-md);
+  }
+
+  .hero-slide-pane {
+    padding: 24px 28px 36px;
+    min-height: 180px;
+  }
+
+  .hero-title {
+    font-size: 24px;
+  }
+
+  .hero-subtitle {
+    font-size: 13px;
+  }
+
+  .hero-discount {
+    font-size: 16px;
+  }
+
+  .hero-slide-img {
+    max-height: 140px;
+  }
+
+  .hero-dots--floating {
+    left: 28px;
+    bottom: 12px;
+  }
+
+  .hero-arrow-btn {
+    width: 34px;
+    height: 34px;
+  }
+
+  .hero-arrow-btn--prev { left: -8px; }
+  .hero-arrow-btn--next { right: -8px; }
+
+  .hero-bg-rings {
+    width: 280px;
+    height: 280px;
+    right: -40px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-slide-pane {
+    padding: 20px 16px 32px;
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: 12px;
+    min-height: 220px;
+  }
+
+  .hero-title {
+    font-size: 20px;
+  }
+
+  .hero-subtitle {
+    font-size: 12px;
+  }
+
+  .hero-discount {
+    font-size: 15px;
+  }
+
+  .hero-content {
+    max-width: 100%;
+  }
+
+  .hero-graphic-wrap {
+    position: absolute;
+    right: 16px;
+    bottom: 28px;
+    opacity: 0.35;
+    pointer-events: none;
+  }
+
+  .hero-slide-img {
+    max-height: 110px;
+  }
+
+  .hero-dots--floating {
+    left: 16px;
+    bottom: 10px;
+  }
+}
+
+/* ─── 5. SECTION HEADER ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .section-header {
+    margin: 28px 0 16px;
+  }
+
+  .section-header__title {
+    font-size: 17px;
+  }
+
+  .section-header__view-all {
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 480px) {
+  .section-header {
+    margin: 22px 0 14px;
+  }
+
+  .section-header__title {
+    font-size: 16px;
+  }
+}
+
+/* ─── 6. PRODUCT GRID ────────────────────────────────────── */
+/* Already has good breakpoints, just tune gaps for mobile */
+@media (max-width: 640px) {
+  .product-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ─── 7. PRODUCT CARD ────────────────────────────────────── */
+@media (max-width: 640px) {
+  .product-card__image-container {
+    height: 140px;
+    padding: 12px;
+  }
+
+  .product-card__title {
+    font-size: 13px;
+    height: auto;
+    min-height: 36px;
+  }
+
+  .product-card__info {
+    padding: 10px 12px 12px;
+  }
+
+  .product-card__price-current {
+    font-size: 14px;
+  }
+
+  .product-card__price-original {
+    font-size: 11px;
+  }
+
+  .product-card__savings {
+    font-size: 11px;
+  }
+
+  .product-card__discount-badge {
+    width: 40px;
+    height: 37px;
+  }
+
+  .product-card__discount-val {
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 360px) {
+  .product-card__image-container {
+    height: 160px;
+  }
+
+  .product-card__title {
+    font-size: 14px;
+  }
+}
+
+/* ─── 8. TOP CATEGORIES ─────────────────────────────────── */
+@media (max-width: 768px) {
+  .category-circle-avatar {
+    width: 72px;
+    height: 72px;
+    padding: 10px;
+  }
+
+  .category-circle-label {
+    font-size: 12px;
+  }
+
+  .top-categories-grid {
+    gap: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-circle-avatar {
+    width: 62px;
+    height: 62px;
+    padding: 8px;
+  }
+
+  .category-circle-label {
+    font-size: 11px;
+  }
+
+  .top-categories-grid {
+    gap: 8px;
+  }
+}
+
+/* ─── 9. TOP BRANDS MARQUEE ─────────────────────────────── */
+@media (max-width: 768px) {
+  .brand-card {
+    flex: 0 0 280px;
+    min-width: 250px;
+    min-height: 140px;
+    padding: 20px;
+  }
+
+  .brand-card__image-box {
+    width: 90px;
+    height: 90px;
+  }
+
+  .brand-card__offer {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-card {
+    flex: 0 0 260px;
+    min-width: 230px;
+    min-height: 130px;
+    padding: 16px;
+  }
+
+  .brand-card__image-box {
+    width: 80px;
+    height: 80px;
+  }
+}
+
+/* ─── 10. DAILY ESSENTIALS ──────────────────────────────── */
+@media (max-width: 640px) {
+  .daily-essentials-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .essential-card__image-box {
+    height: 100px;
+    padding: 10px;
+  }
+
+  .essential-card__name,
+  .essential-card__discount {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 400px) {
+  .daily-essentials-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .essential-card__image-box {
+    height: 90px;
+  }
+}
+
+/* ─── 11. PAGINATION ─────────────────────────────────────── */
+@media (max-width: 480px) {
+  .pagination-wrap {
+    gap: 4px;
+    margin: 24px 0 12px;
+  }
+
+  .pagination-btn {
+    height: 38px;
+    min-width: 38px;
+    padding: 0 10px;
+    font-size: 13px;
+  }
+}
+
+/* ─── 12. FOOTER ─────────────────────────────────────────── */
+@media (max-width: 1024px) {
+  .footer__main {
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 32px;
+    padding: 40px 20px 28px;
+  }
+}
+
+@media (max-width: 768px) {
+  .footer {
+    margin-top: 40px;
+  }
+
+  .footer__main {
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    padding: 36px 16px 24px;
+  }
+
+  .footer__col-brand {
+    grid-column: 1 / -1;
+    max-width: 100%;
+  }
+
+  .footer__app-badges {
+    flex-wrap: wrap;
+  }
+
+  .footer__brand-title {
+    font-size: 26px;
+    margin-bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .footer__main {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 28px 16px 20px;
+  }
+
+  .footer__brand-title {
+    font-size: 22px;
+  }
+
+  .footer__col-heading {
+    font-size: 14px;
+  }
+
+  .footer__link {
+    font-size: 12px;
+  }
+
+  .footer-circle-rings {
+    display: none; /* avoid overflow on small screens */
+  }
+
+  .footer__bottom {
+    font-size: 11px;
+    padding: 12px 16px;
+  }
+}
+
+/* ─── 13. PRODUCT DETAIL PAGE (PDP) ─────────────────────── */
+
+/* Tablet: reduce gap, keep 2 columns */
+@media (max-width: 1024px) {
+  .pdp-grid {
+    gap: 32px;
+  }
+
+  .pdp-title {
+    font-size: 22px;
+  }
+
+  .pdp-price {
+    font-size: 24px;
+  }
+}
+
+/* Mobile: full single-column flow */
+@media (max-width: 768px) {
+  .pdp-main {
+    padding: 16px 16px 48px;
+  }
+
+  .pdp-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .pdp-image-section {
+    position: static;
+  }
+
+  .pdp-image-box {
+    min-height: 260px;
+    max-height: 320px;
+    padding: 20px;
+    border-radius: 12px;
+  }
+
+  .pdp-main-image {
+    max-height: 260px;
+  }
+
+  .pdp-thumbnail-btn {
+    width: 56px;
+    height: 56px;
+  }
+
+  .pdp-info-section {
+    gap: 12px;
+  }
+
+  .pdp-title {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+
+  .pdp-price {
+    font-size: 22px;
+  }
+
+  .pdp-breadcrumb {
+    font-size: 12px;
+    margin-bottom: 16px;
+    gap: 6px;
+  }
+
+  /* Actions row: full width on mobile */
+  .pdp-actions-row {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+
+  .pdp-quantity-stepper {
+    height: 46px;
+  }
+
+  .pdp-qty-btn {
+    width: 44px;
+    font-size: 20px;
+  }
+
+  .pdp-add-cart-btn {
+    flex: 1;
+    min-width: 140px;
+    height: 46px;
+    font-size: 15px;
+    border-radius: 10px;
+  }
+
+  /* Variant pills: larger touch targets */
+  .pdp-option-btn {
+    padding: 10px 18px;
+    font-size: 14px;
+  }
+
+  .pdp-status-card {
+    padding: 40px 16px;
+    margin: 24px auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .pdp-main {
+    padding: 12px 12px 40px;
+  }
+
+  .pdp-image-box {
+    min-height: 220px;
+    max-height: 280px;
+    padding: 16px;
+  }
+
+  .pdp-main-image {
+    max-height: 220px;
+  }
+
+  .pdp-title {
+    font-size: 18px;
+  }
+
+  .pdp-price {
+    font-size: 20px;
+  }
+
+  .pdp-description {
+    font-size: 13px;
+  }
+
+  /* Full-width Add to Cart on very small screens */
+  .pdp-actions-row {
+    gap: 10px;
+  }
+
+  .pdp-add-cart-btn {
+    width: 100%;
+    flex: none;
+  }
+
+  .pdp-feedback {
+    font-size: 12px;
+    padding: 9px 12px;
+  }
+}
+
+/* ─── 14. CART PAGE ──────────────────────────────────────── */
+
+/* Tablet: 2-col narrowed */
+@media (max-width: 1024px) {
+  .cart-layout {
+    grid-template-columns: 1fr 300px;
+    gap: 20px;
+  }
+}
+
+/* Mobile: single column stacked */
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 16px 12px 48px;
+  }
+
+  .cart-layout {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .cart-title {
+    font-size: 22px;
+  }
+
+  .cart-items-header {
     display: none;
+  }
+
+  .cart-summary-card {
+    position: static;
+  }
+
+  /* Cart item: 2-column image + info, then full-width actions */
+  .cart-item {
+    grid-template-columns: 80px 1fr;
+    gap: 14px;
+    padding: 16px 14px;
+  }
+
+  .cart-item__image-wrap {
+    width: 80px;
+    height: 80px;
+  }
+
+  .cart-item__name {
+    font-size: 14px;
+  }
+
+  .cart-item__mobile-pricing {
+    display: block;
+    margin-top: 4px;
+  }
+
+  .cart-item__unit-price {
+    font-size: 13px;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+
+  /* Actions row spans full width below image+info */
+  .cart-item__actions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    padding-top: 12px;
+    border-top: 1px dashed var(--border-subtle);
+    margin-top: 4px;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .cart-item__unit-col {
+    display: none;
+  }
+
+  /* Qty controls: bigger touch targets */
+  .cart-qty-btn {
+    width: 36px;
+    height: 36px;
+  }
+
+  .cart-qty-value {
+    min-width: 32px;
+    font-size: 15px;
+  }
+
+  .cart-qty-control {
+    height: 36px;
+  }
+
+  /* Remove btn */
+  .cart-remove-btn {
+    font-size: 13px;
+    padding: 6px 10px;
+  }
+
+  /* Success card */
+  .cart-success-card {
+    padding: 32px 16px;
+    margin: 12px auto;
+  }
+
+  .cart-success-card__title {
+    font-size: 20px;
+  }
+
+  /* Empty state */
+  .cart-empty-state,
+  .cart-auth-gate {
+    padding: 40px 16px;
+    margin: 20px auto;
+  }
+
+  .cart-empty-state__title,
+  .cart-auth-gate__title {
+    font-size: 19px;
+  }
+
+  /* Checkout btn: full width */
+  .cart-btn--checkout {
+    padding: 16px 20px;
+    font-size: 15px;
+  }
+
+  /* Banner */
+  .cart-banner {
+    padding: 12px 14px;
+    font-size: 13px;
+  }
+
+  /* Summary card */
+  .cart-summary-card {
+    border-radius: var(--radius-md);
+  }
+
+  .cart-summary-card__title {
+    font-size: 17px;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-page {
+    padding: 12px 10px 40px;
+  }
+
+  .cart-item {
+    grid-template-columns: 72px 1fr;
+    gap: 12px;
+    padding: 14px 12px;
+  }
+
+  .cart-item__image-wrap {
+    width: 72px;
+    height: 72px;
+  }
+
+  .cart-item__name {
+    font-size: 13px;
+  }
+
+  .cart-title {
+    font-size: 20px;
+  }
+
+  .cart-count-pill {
+    font-size: 12px;
+  }
+
+  .cart-success-card__title {
+    font-size: 18px;
+  }
+}
+
+/* ─── 15. LOGIN PAGE ──────────────────────────────────────── */
+@media (max-width: 480px) {
+  .login-card {
+    padding: 28px 20px;
+    border-radius: 12px;
+  }
+}
+
+/* ─── 16. APP CONTAINER: responsive padding ───────────────── */
+@media (max-width: 768px) {
+  .app-container {
+    padding: 0 12px;
+  }
+}
+
+@media (max-width: 480px) {
+  .app-container {
+    padding: 0 10px;
+  }
+}
+
+/* ─── 17. HERO BANNER CONTAINER ─────────────────────────── */
+@media (max-width: 768px) {
+  .hero-banner-container {
+    margin: 12px auto 0;
+  }
+}
+
+/* ─── 18. PREVENT FIXED-WIDTH OVERFLOW ───────────────────── */
+@media (max-width: 480px) {
+  .cart-layout,
+  .pdp-grid,
+  .product-grid,
+  .footer__main {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Overflow safety: images and media */
+  img {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ─── 19. TOUCH TARGET POLISH ────────────────────────────── */
+@media (pointer: coarse) {
+  /* Minimum tap targets for all interactive elements */
+  .category-pill {
+    min-height: 40px;
+  }
+
+  .pagination-btn {
+    min-height: 40px;
+    min-width: 40px;
+  }
+
+  .pdp-option-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .pdp-qty-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .cart-qty-btn {
+    min-width: 36px;
+    min-height: 36px;
+  }
+
+  .main-header__btn {
+    min-height: 44px;
+    min-width: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 
