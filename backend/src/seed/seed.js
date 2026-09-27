@@ -14,8 +14,8 @@ const productsData = [
     category: 'Electronics',
     description: 'High-fidelity active noise-cancelling wireless headphones with 40-hour battery life, ultra-plush memory foam earcups, and spatial audio support.',
     images: [
-      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80',
-      'https://images.unsplash.com/photo-1484704849700-f032a568e944?w=800&q=80'
+      'https://images.unsplash.com/photo-1546435770-a3e426bf472b?w=800&q=80',
+      'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=800&q=80'
     ],
     variants: [
       { sku: 'SF-ELEC-01-STD-BLK', size: 'Standard', colour: 'Midnight Black', price: 199.99, stock: 25 },
@@ -29,8 +29,8 @@ const productsData = [
     category: 'Electronics',
     description: 'Custom hot-swappable mechanical keyboard featuring CNC aluminum chassis, pre-lubed switches, PBT double-shot keycaps, and south-facing RGB.',
     images: [
-      'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&q=80',
-      'https://images.unsplash.com/photo-1618384887929-16ec33fab9ef?w=800&q=80'
+      'https://images.unsplash.com/photo-1595225476474-87563907a212?w=800&q=80',
+      'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=800&q=80'
     ],
     variants: [
       { sku: 'SF-ELEC-02-TKL-RED', size: 'Tenkeyless', colour: 'Linear Red', price: 129.99, stock: 15 },
@@ -44,8 +44,8 @@ const productsData = [
     category: 'Electronics',
     description: 'Precision AMOLED smartwatch tracking ECG, SpO2, HRV, sleep cycles, and 120+ sport modes with 7-day battery life and titanium bezel.',
     images: [
-      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
-      'https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=800&q=80'
+      'https://images.unsplash.com/photo-1508685096489-7aacd43bd3b1?w=800&q=80',
+      'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80'
     ],
     variants: [
       { sku: 'SF-ELEC-03-40M-BLK', size: '40mm', colour: 'Space Black', price: 249.99, stock: 8 },
@@ -59,7 +59,7 @@ const productsData = [
     category: 'Electronics',
     description: 'Studio-grade 4K UHD streaming webcam with dual AI noise-cancelling mics, HDR auto light correction, and integrated magnetic privacy shutter.',
     images: [
-      'https://images.unsplash.com/photo-1588702547919-26089e690ecc?w=800&q=80'
+      'https://images.unsplash.com/photo-1629429408209-1f912961dbd8?w=800&q=80'
     ],
     variants: [
       { sku: 'SF-ELEC-04-STD-BLK', size: 'Standard', colour: 'Carbon Black', price: 89.99, stock: 20 },
@@ -72,7 +72,7 @@ const productsData = [
     category: 'Electronics',
     description: 'Compact 4-port Gallium Nitride wall charger with 3x USB-C Power Delivery and 1x USB-A QC4+ ports to charge laptops, tablets, and phones simultaneously.',
     images: [
-      'https://images.unsplash.com/photo-1622445262464-84b1456045b6?w=800&q=80'
+      'https://images.unsplash.com/photo-1583863788434-e58a36330cf0?w=800&q=80'
     ],
     variants: [
       { sku: 'SF-ELEC-05-STD-WHT', size: 'Standard', colour: 'Glossy White', price: 49.99, stock: 50 },
@@ -85,7 +85,7 @@ const productsData = [
     category: 'Electronics',
     description: 'IPX7 waterproof portable speaker with true 360-degree acoustic dispersion, deep resonant bass radiator, and 24-hour continuous playtime.',
     images: [
-      'https://images.unsplash.com/photo-1608043152269-423dbba4e7e1?w=800&q=80'
+      'https://images.unsplash.com/photo-1545454675-3531b543be5d?w=800&q=80'
     ],
     variants: [
       { sku: 'SF-ELEC-06-STD-CHR', size: 'Standard', colour: 'Charcoal', price: 79.99, stock: 18 },
@@ -131,7 +131,7 @@ const productsData = [
     category: 'Apparel',
     description: '14.5 oz Japanese selvedge denim in a clean slim-tapered cut with custom copper hardware, chain-stitched hems, and genuine leather patch.',
     images: [
-      'https://images.unsplash.com/photo-1542272604-780c96856592?w=800&q=80'
+      'https://images.unsplash.com/photo-1541099649105-f69ad21f3246?w=800&q=80'
     ],
     variants: [
       { sku: 'SF-APPR-03-30-IND', size: '30W', colour: 'Indigo Raw', price: 140.00, stock: 8 },
