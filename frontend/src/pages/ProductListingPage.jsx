@@ -14,7 +14,7 @@ import Footer from '../components/Footer';
 import { getProducts } from '../api/client';
 
 const DEBOUNCE_MS = 300;
-const PAGE_SIZE = 10; // 5 columns x 2 rows in Figma grid
+const PAGE_SIZE = 15; // 5 columns x 3 full rows in Figma grid
 
 export default function ProductListingPage() {
   const [searchParams, setSearchParams] = useSearchParams();

@@ -32,14 +32,14 @@ export default function Footer() {
             <IconWhatsApp />
             <div>
               <span className="footer__contact-label">Whats App</span>
-              <span className="footer__contact-val">+1 202-918-2132</span>
+              <span className="footer__contact-val">+91 89251580--</span>
             </div>
           </div>
           <div className="footer__contact-item">
             <IconPhone />
             <div>
               <span className="footer__contact-label">Call Us</span>
-              <span className="footer__contact-val">+1 202-918-2132</span>
+              <span className="footer__contact-val">+91 89251580--</span>
             </div>
           </div>
 
