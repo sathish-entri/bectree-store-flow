@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { login as apiLogin, getMe } from '../api/client';
+import { login as apiLogin, register as apiRegister, getMe } from '../api/client';
 
 const AuthContext = createContext(null);
 
@@ -28,6 +28,14 @@ export function AuthProvider({ children }) {
     return data;
   }, []);
 
+  const register = useCallback(async (name, email, password) => {
+    const data = await apiRegister(name, email, password);
+    localStorage.setItem('sf_token', data.token);
+    setToken(data.token);
+    setUser(data.user);
+    return data;
+  }, []);
+
   const logout = useCallback(() => {
     localStorage.removeItem('sf_token');
     setToken(null);
@@ -35,7 +43,7 @@ export function AuthProvider({ children }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, token, loading, login, logout, isLoggedIn: !!user }}>
+    <AuthContext.Provider value={{ user, token, loading, login, register, logout, isLoggedIn: !!user }}>
       {children}
     </AuthContext.Provider>
   );

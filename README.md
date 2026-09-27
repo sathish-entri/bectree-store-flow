@@ -88,3 +88,8 @@ npm run dev
 ```
 
 The frontend will run locally on Vite's local development server (typically `http://localhost:5173`).
+
+## Design & Implementation Notes
+
+### Step 9: Product Detail Screen
+Product Detail layout was not explicitly provided in the Figma reference. The page follows the existing storefront visual language and implements the required product image, variant selection, stock awareness, and Add to Cart flow.
