@@ -189,7 +189,7 @@ export default function Navbar({ onSearch, searchValue, onToggleMobileFilter }) 
                   id="global-search-input"
                   className="main-header__search-input"
                   type="search"
-                  placeholder="Search essentials, groceries and more..."
+                  placeholder="Search essentials, groceries..."
                   value={localSearch}
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}

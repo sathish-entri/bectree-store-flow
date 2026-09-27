@@ -34,6 +34,8 @@ export default function HeroBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isHovered, setIsHovered] = useState(false);
   const timerRef = useRef(null);
+  const touchStartX = useRef(0);
+  const touchEndX = useRef(0);
 
   const nextSlide = useCallback(() => {
     setCurrentSlide(c => (c + 1) % SLIDES.length);
@@ -50,6 +52,27 @@ export default function HeroBanner() {
     return () => clearInterval(timerRef.current);
   }, [nextSlide, isHovered]);
 
+  // Mobile touch swipe gestures
+  const handleTouchStart = (e) => {
+    touchStartX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchMove = (e) => {
+    touchEndX.current = e.targetTouches[0].clientX;
+  };
+
+  const handleTouchEnd = () => {
+    if (!touchStartX.current || !touchEndX.current) return;
+    const diff = touchStartX.current - touchEndX.current;
+    if (diff > 40) {
+      nextSlide();
+    } else if (diff < -40) {
+      prevSlide();
+    }
+    touchStartX.current = 0;
+    touchEndX.current = 0;
+  };
+
   return (
     <div
       className="hero-banner-container"
@@ -57,8 +80,11 @@ export default function HeroBanner() {
       aria-label="Featured Promotions Carousel"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
+      onTouchStart={handleTouchStart}
+      onTouchMove={handleTouchMove}
+      onTouchEnd={handleTouchEnd}
     >
-      {/* Left Circular Arrow Button */}
+      {/* Left Circular Arrow Button (Desktop / Tablet) */}
       <button
         type="button"
         className="hero-arrow-btn hero-arrow-btn--prev"
@@ -70,18 +96,28 @@ export default function HeroBanner() {
         </svg>
       </button>
 
-      {/* Main Banner Body with Smooth Sliding Animation Track */}
+      {/* Main Banner Card */}
       <div className="hero-card">
-        {/* Animated Sliding Track */}
+        {/* Animated Sliding Track with exact N * 100% calculation */}
         <div
           className="hero-slider-track"
           style={{
-            transform: `translateX(-${currentSlide * 100}%)`,
-            transition: 'transform 0.65s cubic-bezier(0.25, 1, 0.5, 1)',
+            display: 'flex',
+            width: `${SLIDES.length * 100}%`,
+            transform: `translateX(-${(currentSlide * 100) / SLIDES.length}%)`,
+            transition: 'transform 0.5s cubic-bezier(0.25, 1, 0.5, 1)',
           }}
         >
           {SLIDES.map((slide) => (
-            <div key={slide.id} className="hero-slide-pane">
+            <div
+              key={slide.id}
+              className="hero-slide-pane"
+              style={{
+                width: `${100 / SLIDES.length}%`,
+                flex: `0 0 ${100 / SLIDES.length}%`,
+                boxSizing: 'border-box',
+              }}
+            >
               {/* Concentric Decorative Rings per Slide */}
               <div className="hero-bg-rings" aria-hidden="true">
                 <div className="hero-ring hero-ring--1" />
@@ -93,14 +129,16 @@ export default function HeroBanner() {
               <div className="hero-content">
                 <p className="hero-subtitle">{slide.subtitle}</p>
                 <h2 className="hero-title">{slide.title}</h2>
-                <p className="hero-discount">{slide.discount}</p>
+                <div className="hero-discount-wrap">
+                  <span className="hero-discount">{slide.discount}</span>
+                </div>
               </div>
 
               {/* Right Image/Asset */}
               <div className="hero-graphic-wrap">
                 {slide.type === 'graphic' ? (
                   <div className="hero-watch-wrapper">
-                    <SmartWatchGraphic width={220} height={220} />
+                    <SmartWatchGraphic />
                   </div>
                 ) : (
                   <img
@@ -115,24 +153,21 @@ export default function HeroBanner() {
           ))}
         </div>
 
-        {/* Figma Dots: 1 active wide pill + inactive dots */}
+        {/* Figma Dots: exact count matching slides */}
         <div className="hero-dots hero-dots--floating" aria-label="Carousel pagination">
-          {[0, 1, 2, 3, 4, 5, 6].map((idx) => {
-            const isActive = (currentSlide % SLIDES.length) === (idx % SLIDES.length);
-            return (
-              <button
-                key={idx}
-                type="button"
-                className={`hero-dot${isActive ? ' hero-dot--active' : ''}`}
-                onClick={() => setCurrentSlide(idx % SLIDES.length)}
-                aria-label={`Go to slide ${(idx % SLIDES.length) + 1}`}
-              />
-            );
-          })}
+          {SLIDES.map((_, idx) => (
+            <button
+              key={idx}
+              type="button"
+              className={`hero-dot${idx === currentSlide ? ' hero-dot--active' : ''}`}
+              onClick={() => setCurrentSlide(idx)}
+              aria-label={`Go to slide ${idx + 1}`}
+            />
+          ))}
         </div>
       </div>
 
-      {/* Right Circular Arrow Button */}
+      {/* Right Circular Arrow Button (Desktop / Tablet) */}
       <button
         type="button"
         className="hero-arrow-btn hero-arrow-btn--next"
